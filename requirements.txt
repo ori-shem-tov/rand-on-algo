@@ -1,0 +1,1 @@
+git+git://github.com/algorand/pyteal.git@120202c#egg=pyteal
