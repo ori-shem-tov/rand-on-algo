@@ -1,0 +1,132 @@
+#pragma version 3
+arg 0
+byte "query"
+==
+bnz l11
+arg 0
+byte "settlement"
+==
+bnz l3
+err
+l3:
+global GroupSize
+int 2
+!=
+bnz l9
+txn GroupIndex
+int 0
+==
+bnz l8
+txn GroupIndex
+int 1
+==
+bnz l7
+err
+l7:
+txn TypeEnum
+int pay
+==
+txn Amount
+int 0
+==
+&&
+gtxn 0 TypeEnum
+int appl
+==
+&&
+gtxn 0 OnCompletion
+int CloseOut
+==
+&&
+gtxna 0 ApplicationArgs 0
+byte "A"
+==
+txn CloseRemainderTo
+addr USBW2XJGOJINHTAJJPKXV3S2NWSZKV4KRWH5KIBOZYUTKFNXP73WSZITGI
+==
+&&
+gtxna 0 ApplicationArgs 0
+byte "B"
+==
+txn CloseRemainderTo
+addr ZUUCQCF3AVUBLFOSRSN6NY64GI3ZI2XJJ53ONX7EM7DJBWXYIXQB3UAMFU
+==
+&&
+||
+&&
+return
+l8:
+txn TypeEnum
+int appl
+==
+txn OnCompletion
+int CloseOut
+==
+&&
+return
+l9:
+int 0
+return
+b l12
+l11:
+byte 0xAAAAAAAAAAAAAAAA
+byte 0xAAAAAAAAAAAAAAAA
+==
+txn RekeyTo
+global ZeroAddress
+==
+&&
+global GroupSize
+int 4
+==
+&&
+gtxn 0 TypeEnum
+int pay
+==
+gtxn 0 Sender
+addr USBW2XJGOJINHTAJJPKXV3S2NWSZKV4KRWH5KIBOZYUTKFNXP73WSZITGI
+==
+&&
+gtxn 0 Receiver
+txn Sender
+==
+&&
+&&
+gtxn 1 TypeEnum
+int pay
+==
+gtxn 1 Sender
+addr ZUUCQCF3AVUBLFOSRSN6NY64GI3ZI2XJJ53ONX7EM7DJBWXYIXQB3UAMFU
+==
+&&
+gtxn 1 Receiver
+txn Sender
+==
+&&
+&&
+txn GroupIndex
+int 2
+==
+txn TypeEnum
+int appl
+==
+&&
+txn OnCompletion
+int OptIn
+==
+&&
+txn GroupIndex
+int 3
+==
+txn TypeEnum
+int pay
+==
+&&
+txn CloseRemainderTo
+global ZeroAddress
+==
+&&
+||
+&&
+return
+l12:

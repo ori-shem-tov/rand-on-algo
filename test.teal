@@ -1,0 +1,48 @@
+#pragma version 3
+txn ApplicationID
+int 0
+!=
+bnz l2
+int 1
+return
+l2:
+byte "Program"
+byte base64(AyAEAgABBiYH)
+concat
+byte 0x20
+concat
+addr LI5I7DNXC2FK6EVUJUOKXIPS3LV7FU5VHHI7LHBRIEBTTEWX5GICA47DBQ
+concat
+byte 0x08
+concat
+txn ApplicationID
+itob
+concat
+byte 0x03
+concat
+byte "vrf"
+concat
+byte 0x08
+concat
+txna ApplicationArgs 3
+concat
+byte 0x20
+concat
+txna ApplicationArgs 0
+txna ApplicationArgs 1
+concat
+txna ApplicationArgs 2
+concat
+sha256
+concat
+byte 0x20
+concat
+txna Accounts 1
+concat
+byte 0x20
+concat
+byte base32(YUO5WDTSKVI5VADGDNGDCFDTPDO2TQMH2OZGZ6MLDXA6G2ZU5CDQ====)
+concat
+txna ApplicationArgs 4
+concat
+store 0

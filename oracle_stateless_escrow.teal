@@ -1,0 +1,69 @@
+#pragma version 3
+global GroupSize
+int 2
+!=
+bnz l6
+txn GroupIndex
+int 0
+==
+bnz l5
+txn GroupIndex
+int 1
+==
+bnz l4
+err
+l4:
+txn TypeEnum
+int pay
+==
+txn Amount
+int 0
+==
+&&
+txn CloseRemainderTo
+addr LI5I7DNXC2FK6EVUJUOKXIPS3LV7FU5VHHI7LHBRIEBTTEWX5GICA47DBQ
+==
+&&
+return
+l5:
+txn TypeEnum
+int appl
+==
+txn ApplicationID
+byte 0x0000000000000006
+btoi
+==
+&&
+txna ApplicationArgs 0
+byte "vrf"
+==
+&&
+txna ApplicationArgs 1
+byte "00000050"
+==
+&&
+txna ApplicationArgs 3
+byte base32(CQQOAKRGOMQAHWWV7RS23345OFAUBPNMV2SIDQ3WFQ2RGA6T3KCQ====)
+==
+&&
+txna Accounts 1
+addr ERI2YG6I4RZ3CC3ROJKZDGOE6I35W5KW2QGOSGM2N5IE46H6MJFQLMXTWE
+==
+&&
+txn Sender
+byte "00000050"
+concat
+txna ApplicationArgs 2
+concat
+byte base32(CQQOAKRGOMQAHWWV7RS23345OFAUBPNMV2SIDQ3WFQ2RGA6T3KCQ====)
+concat
+txna ApplicationArgs 4
+concat
+arg 0
+byte base32(YUO5WDTSKVI5VADGDNGDCFDTPDO2TQMH2OZGZ6MLDXA6G2ZU5CDQ====)
+ed25519verify
+&&
+return
+l6:
+int 0
+return
